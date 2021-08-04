@@ -1,0 +1,17 @@
+
+spring:
+  application:
+    name: springboot-dubbo-consumer
+  dubbo:
+    registry: zookeeper://192.168.1.108:2181
+  #设置tymleaf前后缀
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8

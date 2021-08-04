@@ -1,0 +1,21 @@
+新建Spring boot集成mybatis项目 使用Dubbo架构
+1.新建父亲工程为普通maven项目，删除src文件，新建接口工程继承于父工程
+
+2.分别创建提供者模块，和消费者模块，添加相应的 dubbo,zookeeper,mybatis,mysql,redis,接口工程等的依赖
+
+3.将依赖版本添加到父工程进行管理，将接口工程<parent>标签的内容粘贴到提供者和消费者对应位置
+
+4.将逆向工程文件放到提供者目录下配置数据库表相关，添加逆向工程插件依赖，自动生成逆向工程文件实体类model和业务接口类放在接口工程中，
+数据库映射文件和XML文件放在提供者对应mapper目录下
+
+5.在资源文件夹下创建appliation.yml配置文件，配置相关数据源、服务器端口、dubbo、zookeeper、redis配置相关，
+指定mapper映射xml文件mapper-location:
+
+6.在消费者层创建相关配置的yml文件，添加thymeleaf依赖，创建controller类，使用restful风格，引入业务层，设置访问路径，
+调用业务层方法，返回页面。在resources文件目录下的templates文件夹下创建对应的HTML页面接收数据
+
+7.通过业务层方法调用在提供者目录下生成serviceImpl文件，引入使用@Autowarid注解引入Mapper映射文件，创建业务方法，返回调用映射的方法，将此接口实现类通过@Component添加到spring容器中，标注为@Servie(设置interfaceclaas=service接口)，
+在消费者层的controller中的业务层引入处添加@Reference容器扫描器。
+
+8.在提供者启动类中添加mapper扫描器注解，指定扫描的mapper文件夹，添加@EnableDubboConfiguration开启dubbo配置,启动项目。
+在消费者入口类中添加@EnableDubboConfiguration开启dubbo配置，启动项目
